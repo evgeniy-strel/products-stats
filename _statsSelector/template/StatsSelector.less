@@ -1,0 +1,98 @@
+.StatsSelector {
+    .Stats__BlocksMetrics {
+        grid-template-columns: 3fr 2fr 2fr;
+
+        &_CountMain {
+            width: 60px;
+            height: 29px;
+        }
+
+        &_CountSmall {
+            width: 28px;
+            height: 17px;
+        }
+
+        &_Percent {
+            width: 76px;
+            height: 29px;
+        }
+    }
+
+    .Stats__BlocksMetrics_pages {
+        grid-template-columns: 1fr 1fr 1fr;
+
+        &_CountMain {
+            width: 116px;
+            height: 26px;
+            margin-bottom: 2px;
+        }
+
+        &_CountSmall {
+            width: 50px;
+            height: 15px;
+            margin-top: 2px;
+        }
+
+        &_Percent {
+            width: 76px;
+            height: 29px;
+        }
+    }
+
+    --graphs__baseColors_color-0: #dfe6eb;
+    --graphs__baseColors_color-1: #5c94fb;
+    --graphs__baseColors_color-2: #4aba7a;
+    --graphs__baseColors_color-3: #faa75a;
+    --graphs__baseColors_color-4: #facb5a;
+    --graphs__baseColors_color-5: #ff6e6e;
+    --graphs__baseColors_color-6: #7a69ff;
+    --graphs__baseColors_color-7: #ff6e9e;
+    --graphs__baseColors_color-8: #fabf5a;
+    --graphs__baseColors_color-9: #c968ff;
+    --graphs__baseColors_color-10: #a5e892;
+    --graphs__baseColors_color-11: #6ec2ff;
+    --graphs__baseColors_color-12: #ff5757;
+
+    .shadow-1 {
+        box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 7px 24px -4px;
+    }
+
+    .success-block {
+        background: #DCFCE7;
+        color: #22C55E;
+    }
+
+    .unsuccess-block {
+        background: #FEE2E2;
+        color: #991b1b;
+        svg {
+            transform: rotate(180deg);
+            path {
+                fill: #ef4444;  
+            }
+        }
+    }
+
+    .vertical-border {
+        width: 1px;
+        height: 25px;
+        background: #c9c9c9;
+    }
+
+    .ml-auto {
+        margin-left: auto;
+    }
+
+    .gap-16 {
+        gap: 16px;
+    }
+
+    .gap-8 {
+        gap: 8px;
+    }
+
+}
+
+.search_width {
+    width: var(--width_l_inputSearch);
+}

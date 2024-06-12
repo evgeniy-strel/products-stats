@@ -1,0 +1,135 @@
+<ws:template name="bodyContent">
+    <Controls.masterDetail:Base
+        attr:class="tw-h-full"
+        masterWidth="252"
+        newDesign="{{ true }}">
+        <ws:master>
+            <Controls.scroll:Container>
+                <Controls.list:ItemsView
+                    attr:class="controls-margin_top-s"
+                    keyProperty="Title"
+                    displayProperty="Title"
+                    style="master"
+                    items="{{ _masterItems }}"
+                    markedKey="{{ _markedKeyMaster }}"
+                    on:markedKeyChanged="_markedKeyMasterChanged()">
+                    <ws:itemTemplate>
+                        <ws:partial template="Controls/list:ItemTemplate" markerSize="content-xl" scope="{{itemTemplate}}">
+                            <ws:contentTemplate>
+                                <div class="tw-flex tw-items-center gap-8 controls-inlineheight-l">
+                                    <div class="controls-icon controls-icon_size-s controls-icon_style-default {{contentTemplate.item.contents.icon}}"></div>
+                                    <span>{{ contentTemplate.item.contents.Title }}</span>
+                                </div>
+                            </ws:contentTemplate>
+                        </ws:partial>
+                    </ws:itemTemplate>
+                </Controls.list:ItemsView>
+            </Controls.scroll:Container>
+        </ws:master>
+        <ws:detail>
+            <Controls.LoadingIndicator
+                    attr:class="tw-relative tw-w-full tw-h-full"
+                    name="loadingIndicator"
+                    isGlobal="{{ false }}"
+                    delay="{{ 0 }}">
+                <ws:if data="{{ _configs[_markedKeyMaster] }}">
+                    <Controls.context:ContextOptionsProvider
+                            loadResults="{{ _loadResults[_markedKeyMaster] }}"
+                            configs="{{ _configs[_markedKeyMaster] }}">
+                        <Controls.Container.Async templateName="{{ _masterItemActive.template }}">
+                            <ws:partial template="{{ content.resolvedTemplate }}"
+                                        scope="{{ _options }}"/>
+                        </Controls.Container.Async>
+                    </Controls.context:ContextOptionsProvider>
+                </ws:if>
+                <ws:else>
+                    <invisible-node/>
+                </ws:else>
+            </Controls.LoadingIndicator>
+        </ws:detail>
+    </Controls.masterDetail:Base>
+</ws:template>
+
+<Layout.Selector.Stack
+        attr:class="StatsSelector"
+        headerBorderVisible="{{ false }}">
+    <ws:headerContentTemplate>
+         <div class="controls-margin_left-m_optional tw-w-full controls-margin_top-s controls-margin_bottom-s tw-grid gap-16"
+            style="grid-template-columns: 2.2fr 1fr 1fr;">
+            <div>
+                <div class="controls-text-label"
+                     style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px">Продукт</div>
+                <div class="tw-flex">
+                    <div class="tw-flex tw-items-center tw-justify-center ws-flex-shrink-0"
+                         style="border-radius: 10px; box-shadow: 0px 0px 2px 1px #dcdcdc; background: #fff; padding: 2px">
+                        <ws:partial attr:class="ws-flex-shrink-0"
+                                icon="{{ _options.record.Icon }}"
+                                width="54"
+                                height="54"
+                                template="wml!CommonAppMarket/templates/imageTemplate"/>
+                    </div>
+                    <div class="controls-margin_left-m_optional">
+                        <Controls.heading:Title
+                                attr:class="controls-margin_bottom-2xs"
+                                caption="{{ _options.record['Caption'] }}"
+                                fontColorStyle="secondary"
+                                fontSize="3xl"/>
+                        <div class="controls-fontsize-m controls-margin_top-3s ws-line-clamp ws-line-clamp_2"
+                             title="{{ _options.record['Description']}}">
+                            {{ _options.record['Description']}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div >
+                <div class="controls-text-label"
+                     style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px">Разработчик</div>
+                <div class="tw-flex">
+                    <div style="border-radius: 10px; box-shadow: 0px 0px 2px 1px #dcdcdc;">
+                        <Person.photo:View
+                                photoSize="xlt"
+                                photoId="{{ _photoId }}"/>
+                    </div>
+                    <div class="controls-margin_left-s">
+                        <div>{{ _fullName || 'Не указан'  }}</div>
+                        <div class="controls-text-unaccented">{{ _departament }}</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="controls-text-label"
+                     style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px">Статус</div>
+                <div class="tw-flex">
+                    <div style="width: 56px; height: 56px; border-radius: 10px; box-shadow: 0px 0px 2px 1px #dcdcdc; background: #fff"
+                        class="tw-flex tw-justify-center tw-items-center">
+                        <img src="{{ _record.State.get() === 3 ?
+                            'https://iimg.su/s/10/nwR6uOcKnAh4Xyx3Y8bck6KGPrCJGu07e2m6UZ7c.png' :
+                            'https://iimg.su/s/10/nIlH8ugrKlh7K24aXHIDl0aNurwPc1SBYSDvJBDY.png'}}"
+                        width="30" />
+                    </div>
+                    <div class="controls-margin_left-s">
+                        <div>{{ _record.State.get() === 3 ? 'Опубликован' : 'На доработке' }}</div>
+                        <Controls.baseDecorator:Date
+                                fontColorStyle="unaccented"
+                                format="DD.MM.YYYY"
+                                value="{{ _record.AcceptDate }}" />
+                    </div>
+                </div>
+            </div>
+         </div>
+      </ws:headerContentTemplate>
+    <ws:bodyContentTemplate>
+        <ws:partial template="bodyContent" />
+    </ws:bodyContentTemplate>
+    <ws:toolbarContentTemplate>
+        <Controls.buttons:Button
+            inlineHeight="l"
+            iconSize="m"
+            icon="icon-Link"
+            iconStyle="secondary"
+            viewMode="ghost"
+            tooltip="Скопировать ссылку"
+            on:click="_copyLink()"
+        />
+    </ws:toolbarContentTemplate>
+</Layout.Selector.Stack>

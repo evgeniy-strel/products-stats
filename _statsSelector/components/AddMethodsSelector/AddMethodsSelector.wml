@@ -1,0 +1,50 @@
+<Layout.Selector.Stack headingCaption="Методы">
+   <ws:bodyContentTemplate>
+      <Layout.Selector.Browser
+            attr:class="tw-h-full"
+            multiSelectorCheckboxVisibility="hidden"
+            multiSelectorVisibility="hidden"
+            searchParam="SearchString"
+            source="{{ _source }}"
+            navigation="{{ _navigation }}"
+            displayProperty="Binding"
+            keyProperty="Binding"
+            on:selectedKeysChanged="_selectedKeysChanged()">
+         <ws:search>
+            <Controls.search:Input
+                  attr:class="search_width"
+                  placeholder="Введите название метода..."
+                  bind:value="_searchValue"
+                  attr:ws-autofocus="{{ true }}"/>
+         </ws:search>
+         <ws:content>
+            <Controls.scroll:Container attr:class="tw-h-full">
+               <Controls.list:View>
+                  <ws:itemTemplate>
+                     <ws:partial template="Controls/list:ItemTemplate">
+                        <ws:contentTemplate>
+                           <div class="tw-truncate" title="{{ itemTemplate.item.contents.Binding }}">
+                              <ws:if data="{{ itemTemplate.item.searchValue }}">
+                                 <Controls.baseDecorator:Highlight
+                                       title="{{ itemTemplate.item.contents.Binding }}"
+                                       value="{{ itemTemplate.item.contents.Binding || '' }}"
+                                       highlightedValue="{{ itemTemplate.item.searchValue || '' }}"/>
+                              </ws:if>
+                              <ws:else>
+                                 {{ itemTemplate.item.contents.Binding }}
+                              </ws:else>
+                           </div>
+                        </ws:contentTemplate>
+                     </ws:partial>
+                  </ws:itemTemplate>
+                  <ws:emptyTemplate>
+                     <ws:partial template="Controls/list:EmptyTemplate">
+                        <ws:contentTemplate>Нет доступных методов</ws:contentTemplate>
+                     </ws:partial>
+                  </ws:emptyTemplate>
+               </Controls.list:View>
+            </Controls.scroll:Container>
+         </ws:content>
+     </Layout.Selector.Browser>
+   </ws:bodyContentTemplate>
+</Layout.Selector.Stack>

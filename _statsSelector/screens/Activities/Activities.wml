@@ -1,0 +1,84 @@
+<Controls.scroll:Container attr:class="tw-h-full tw-w-full">
+    <div class="controls-margin_left-xs controls-margin_right-xs controls-margin_top-xl controls-margin_bottom-xl">
+        <div class="tw-flex tw-items-center tw-justify-between controls-margin_left-m controls-margin_right-m controls-margin_bottom-m">
+            <Controls.heading:Title
+                    caption="Действия клиентов"
+                    fontSize="5xl"/>
+            <Graphs.InfoBlock
+                    scope="{{ _infoBlockOptions }}"
+                    infoBlockDataVisible="{{ false }}"
+                    infoBlockSelectorsVisible="{{ true }}"
+                    summaryData="{{ _summaryData }}"
+                    periods="{{ _periods }}"
+                    on:periodsChanged="_periodsChanged()"/>
+        </div>
+        <div class="controls-margin_left-m controls-margin_right-m">
+            <ws:partial
+                attr:class="controls-margin_bottom-2xl"
+                template="wml!ComponentStats/_statsSelector/components/StatsResultsMetrics"
+                scope="{{ _resultsItem }}"
+                isLoading="{{ !_isGraphAndTableDataLoaded() }}" />
+            <Graphs.comparison:View
+                    attr:class="controls-margin_bottom-l"
+                    firstPeriodData="{{ _firstPeriodData }}"
+                    secondPeriodData="{{ _secondPeriodData }}"
+                    holidaysData="{{ _holidaysData }}"
+                    periods="{{ _periods }}"
+                    storeId="activitiesGraph"
+                    summaryData="{{ _summaryData }}"
+                    forecastVisible="{{ false }}"
+                    infoBlockDataVisible="{{ false }}"
+                    infoBlockSelectorsVisible="{{ false }}"
+                    containerWidth="{{ 916 }}"
+                    on:periodsChanged="_graphPeriodsChanged()">
+            </Graphs.comparison:View>
+            <div class="tw-flex tw-items-center tw-justify-between controls-margin_bottom-s">
+                <div class="tw-flex tw-items-center gap-16">
+                    <Controls.buttons:Button
+                            caption="Записать действие"
+                            inlineHeight="l"
+                            viewMode="filled"
+                            iconStyle="contrast"
+                            buttonStyle="brand"
+                            fontSize="m"
+                            icon="icon-AddButtonNew"
+                            iconSize="s"
+                            readOnly="{{ _isReadOnly }}"
+                            on:click="_openStackHandler()"/>
+                    <Controls.buttons:Button
+                            caption="Создать папку"
+                            viewMode="filled"
+                            iconStyle="contrast"
+                            buttonStyle="brand"
+                            inlineHeight="l"
+                            fontSize="m"
+                            icon="icon-CreateFolder"
+                            iconSize="s"
+                            readOnly="{{ _isReadOnly }}"
+                            on:click="_editFolder()"/>
+                </div>
+                <Controls.Tumbler:Control
+                        items="{{ _switchGraphItems }}"
+                        direction="horizontal"
+                        bind:selectedKey="_switchGraphKey"
+                        on:selectedKeyChanged="_switchGraphKeyChanged()"/>
+            </div>
+        </div>
+        <Controls.explorer:View
+                name="activitiesTable"
+                storeId="activitiesTable"
+                header="{{ _header }}"
+                columns="{{ _columns }}"
+                itemPadding="{{ _itemPadding }}"
+                itemActions="{{ _isReadOnly ? [] : _itemActions }}"
+                itemActionVisibilityCallback="{{ _itemActionVisibilityCallback }}"
+                itemsDragNDrop="{{ !_isReadOnly }}"
+                expandItemByClick="{{ true }}"
+                expanderIconStyle="unaccented"
+                expanderIconSize="2xs"
+                expandByItemClick="{{ true }}"
+                on:customdragStart="_dragStart()"
+                on:customdragEnd="_dragEnd()"
+                on:actionClick="_actionClick()"/>
+    </div>
+</Controls.scroll:Container>

@@ -1,0 +1,203 @@
+<Controls.form:Controller
+      name="formController"
+      keyProperty="@Activity"
+      record="{{ _record }}"
+      source="{{ _source }}"
+      createMetaData="{{ _createMetaData }}"
+      on:createSuccessed="_onCreateSuccessed()">
+   <Controls.popupTemplate:Stack
+         name="stack"
+         backgroundStyle="unaccented"
+         headerBackgroundStyle="unaccented"
+         headerBorderVisible="{{ false }}"
+         rightBorderVisible="{{ false }}">
+      <ws:headerContentTemplate>
+         <div class="tw-w-full controls-margin_left-m_optional controls-margin_top-s controls-margin_bottom-m">
+            <Controls.breadcrumbs:Path
+                  attr:class="tw-truncate controls-margin_bottom-3xs"
+                  items="{{ _path }}"
+                  displayProperty="caption"
+                  fontColorStyle="unaccented"
+                  readOnly="{{ true }}"
+                  fontSize="m"
+                  keyProperty="id"
+                  parentProperty="parent"/>
+            <div class="tw-w-full tw-flex tw-justify-between">
+               <Controls.validate:InputContainer attr:class="tw-w-full">
+                  <ws:validators>
+                     <ws:Function value="{{ content.record.Name }}"> Controls/validate:isRequired</ws:Function>
+                  </ws:validators>
+                  <ws:content>
+                     <Controls.input:Text
+                           fontColorStyle="default"
+                           fontWeight="bold"
+                           fontSize="4xl"
+                           placeholder="{[ Название сценария действия ]}"
+                           bind:value="content.record.Name"/>
+                  </ws:content>
+               </Controls.validate:InputContainer>
+            </div>
+            <Controls.input:Area
+                  attr:class="tw-w-full"
+                  fontColorStyle="default"
+                  minLines="{{ 2 }}"
+                  maxLines="{{ 2 }}"
+                  borderVisibility="bottom"
+                  placeholder="{[ Краткое описание ]}"
+                  bind:value="content.record.Description"/>
+         </div>
+      </ws:headerContentTemplate>
+      <ws:bodyContentTemplate>
+         <div class="StatsSelector tw-h-full controls__block-wrapper tr">
+            <div class="controls__block tw-flex tw-flex-col controls-padding_top-m">
+               <div class="tw-flex tw-justify-between controls-padding_left-m controls-padding_right-m">
+                  <Controls.buttons:Button
+                        caption="Добавить метод"
+                        inlineHeight="l"
+                        viewMode="filled"
+                        iconStyle="contrast"
+                        buttonStyle="brand"
+                        fontSize="m"
+                        icon="icon-AddButtonNew"
+                        iconSize="s"
+                        on:click="_beginAdd()"/>
+                  <div class="tw-flex gap-16">
+                     <Controls.buttons:Button
+                           caption="Закрыть"
+                           inlineHeight="l"
+                           viewMode="outlined"
+                           iconStyle="default"
+                           buttonStyle="default"
+                           fontSize="m"
+                           icon="icon-Close"
+                           iconSize="s"
+                           on:click="_closeStack()"/>
+                     <Controls.buttons:Button
+                           caption="Сохранить"
+                           inlineHeight="l"
+                           viewMode="filled"
+                           iconStyle="contrast"
+                           buttonStyle="brand"
+                           fontSize="m"
+                           icon="icon-Yes"
+                           iconSize="s"
+                           on:click="_closeStack()"/>
+                  </div>
+               </div>
+               <Controls.heading:Title
+                     attr:class="controls-padding_left-m controls-margin_bottom-3xs controls-margin_top-s"
+                     caption="Список добавленных методов"
+                     fontSize="3xl"/>
+               <Controls.scroll:Container backgroundStyle="default" attr:class="tw-h-full">
+                  <Controls.list:View
+                        attr:class="tw-h-full controls-margin_bottom-l"
+                        name="activityDeclarationList"
+                        keyProperty="@ActivityDeclaration"
+                        itemActionsPosition="custom"
+                        source="{{ _activityDeclarationSource }}"
+                        filter="{{ _activityDeclarationFilter }}"
+                        itemActions="{{ _activityDeclarationActions }}"
+                        itemsReadyCallback="{{ _itemsReadyCallback }}"
+                        displayProperty="Binding"
+                        markerVisibility="hidden"
+                        on:beforeEndEdit="_beforeEndEdit()"
+                        on:afterBeginEdit="_afterBeginEdit()">
+                     <ws:itemTemplate>
+                        <ws:partial template="Controls/list:ItemTemplate">
+                           <ws:contentTemplate>
+                              <ws:partial
+                                    template="Controls/list:EditingTemplate"
+                                    value="{{ itemTemplate.item.contents.Binding }}"
+                                    inputBackgroundVisibility="hidden"
+                                    enabled="{{ true }}">
+                                 <ws:editorTemplate>
+                                    <Controls.popupTargets:InfoboxTarget
+                                          name="infobox"
+                                          borderStyle="danger"
+                                          backgroundStyle="danger"
+                                          trigger="demand"
+                                          showDelay="{{ 0 }}">
+                                       <ws:content>
+                                          <div class="tw-flex tw-items-baseline">
+                                             <Controls.validate:InputContainer name="nameValidator">
+                                                <ws:validators>
+                                                   <ws:Function value="{{ itemTemplate.item.contents.Binding }}">Controls/validate:isRequired</ws:Function>
+                                                   <ws:Function value="{{ itemTemplate.item.contents.Binding }}"
+                                                                  bindingType="{{ itemTemplate.item.contents.BindingType }}"
+                                                                  message="Поле заполнено в неправильном формате">
+                                                      CommonAppMarket/editComponents:bindingValidator
+                                                   </ws:Function>
+                                                </ws:validators>
+                                                <ws:content>
+                                                   <ws:if data="{{ _isMethod(itemTemplate.item.contents.BindingType) }}">
+                                                      <Controls.source:SelectedKey bind:selectedKey="itemTemplate.item.contents.Binding">
+                                                         <Controls.lookup:Input
+                                                               name="bindingListLookup"
+                                                               attr:class="ScenarioSelector__MethodSelector controls-margin_right-m"
+                                                               fontSize="l"
+                                                               contrastBackground="{{ true }}"
+                                                               source="{{ _bindingListSource }}"
+                                                               searchParam="SearchString"
+                                                               navigation="{{ _bindingListNavigation }}"
+                                                               displayProperty="Binding"
+                                                               keyProperty="Binding"
+                                                               multiSelect="{{ false }}"
+                                                               selectorTemplate="{{ _bindingListSelectorTemplate }}">
+                                                            <ws:placeholder>
+                                                               {[Введите название]}&nbsp;
+                                                               <Controls.lookup:Link multiSelect="{{ false }}" fontSize="l" caption="{[метода]}" on:linkClick="_showSelectorInsideLabel()"/>
+                                                            </ws:placeholder>
+                                                            <ws:suggestTemplate templateName="wml!CommonAppMarket/_editComponents/selectors/ScenarioSelector/BindingMethodSuggest"/>
+                                                            <ws:itemTemplate>
+                                                               <ws:partial template="Controls/lookup:ItemTemplate" size="l"/>
+                                                            </ws:itemTemplate>
+                                                         </Controls.lookup:Input>
+                                                      </Controls.source:SelectedKey>
+                                                   </ws:if>
+                                                   <ws:else>
+                                                      <Controls.input:Text
+                                                            attr:class="ScenarioSelector__MethodSelector"
+                                                            contrastBackground="{{ true }}"
+                                                            placeholder="{[Функционал.Контекст.Действие]}"
+                                                            bind:value="itemTemplate.item.contents.Binding"/>
+                                                   </ws:else>
+                                                </ws:content>
+                                             </Controls.validate:InputContainer>
+                                             <ws:partial template="{{ itemTemplate.itemActionsTemplate }}"
+                                                   attr:class="ScenarioSelector__itemActionsTemplate"
+                                                   itemData="{{ itemTemplate.itemData }}"
+                                                   scope="{{ _options }}"/>
+                                          </div>
+                                       </ws:content>
+                                       <ws:template>
+                                          <div>Сохраните метод</div>
+                                       </ws:template>
+                                    </Controls.popupTargets:InfoboxTarget>
+                                 </ws:editorTemplate>
+                                 <ws:viewTemplate>
+                                    {{ contentTemplate.item.contents.Binding }}
+                                    <ws:partial template="{{ itemTemplate.itemActionsTemplate }}"
+                                          itemData="{{ itemTemplate.itemData }}"
+                                          scope="{{ _options }}"/>
+                                 </ws:viewTemplate>
+                              </ws:partial>
+                           </ws:contentTemplate>
+                        </ws:partial>
+                     </ws:itemTemplate>
+                     <ws:itemPadding top="s" bottom="s" left="m" right="s"/>
+                     <ws:editingConfig>
+                           <ws:Object autoAddOnInit="{{ !_readOnly && !_isNewRecord }}" 
+                                       editOnClick="{{ !_readOnly }}" 
+                                       toolbarVisibility="{{ !_readOnly }}" 
+                                       addPosition="bottom"/>
+                     </ws:editingConfig>
+                     <ws:footerTemplate>
+                        <Controls.list:AddButton if="{{ !_readOnly }}" caption="{[Добавить]}" on:click="_beginAdd()"/>
+                     </ws:footerTemplate>
+                  </Controls.list:View>
+               </Controls.scroll:Container>
+            </div>
+         </div>
+      </ws:bodyContentTemplate>
+   </Controls.popupTemplate:Stack>
+</Controls.form:Controller>

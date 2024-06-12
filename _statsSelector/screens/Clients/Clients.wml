@@ -1,0 +1,63 @@
+<Controls.scroll:Container attr:class="tw-h-full tw-w-full">
+    <div class="controls-margin_left-xs controls-margin_right-xs controls-margin_top-xl controls-margin_bottom-xl">
+        <div class="tw-flex tw-items-center tw-justify-between controls-margin_left-m controls-margin_right-m controls-margin_bottom-l">
+            <Controls.heading:Title
+                    caption="Сводка по клиентам"
+                    fontSize="5xl"/>
+            <Graphs.InfoBlock
+                    scope="{{ _infoBlockOptions }}"
+                    infoBlockDataVisible="{{ false }}"
+                    infoBlockSelectorsVisible="{{ true }}"
+                    periods="{{ _periodsTotal }}"
+                    on:periodsChanged="_periodsChangedChart()"/>
+        </div>
+        <div class="tw-flex tw-justify-between controls-margin_left-m controls-margin_right-m">
+            <div class="controls-margin_right-xl">
+                <Controls.heading:Title attr:class="controls-margin_bottom-m"
+                                        caption="Количество активных"
+                                        fontSize="2xl"/>
+                <Graphs.HighChartsLight
+                        chartOptions="{{ _chartOptionsTotalClients }}" />
+            </div>
+            <div class="tw-w-full">
+                <Controls.heading:Title attr:class="controls-margin_bottom-m"
+                                        caption="Самые активные"
+                                        fontSize="2xl"/>
+                <Graphs.HighChartsLight
+                        chartOptions="{{ _chartOptionsTopClients }}" />
+            </div>
+        </div>
+        <div class="tw-flex tw-items-center tw-justify-between controls-margin_left-m controls-margin_right-m controls-margin_bottom-m">
+            <Controls.heading:Title
+                    caption="Все клиенты"
+                    fontSize="5xl"/>
+            <div class="tw-flex tw-items-center">
+            <Controls.dropdown:Button
+                    caption="Выгрузить данные"
+                    keyProperty="key"
+                    inlineHeight="l"
+                    viewMode="filled"
+                    iconStyle="contrast"
+                    buttonStyle="brand"
+                    fontSize="m"
+                    icon="icon-UnloadNew"
+                    iconSize="s"
+                    items="{{ _exportItems }}"
+                    on:menuItemActivate="_exportItemActivated()"/>
+            <Graphs.InfoBlock
+                    scope="{{ _infoBlockOptions }}"
+                    infoBlockDataVisible="{{ false }}"
+                    infoBlockSelectorsVisible="{{ true }}"
+                    periods="{{ _periodsTable }}"
+                    on:periodsChanged="_periodsChangedTable()"/>
+                </div>
+        </div>
+        <Controls.grid:View
+                storeId="clientsTable"
+                header="{{ _header }}"
+                columns="{{ _columns }}"
+                itemPadding="{{ _itemPadding }}"
+                expanderIconStyle="unaccented"
+                expanderIconSize="2xs"/>
+    </div>
+</Controls.scroll:Container>

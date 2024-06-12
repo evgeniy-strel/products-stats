@@ -1,0 +1,140 @@
+<div class="Stats__BlocksMetrics_pages tw-grid gap-16 tw-justify-between">
+    <div class="shadow-1 controls_border-radius-m controls-padding_left-l controls-padding_right-l controls-padding_top-m controls-padding_bottom-m">
+        <div class="controls-fontsize-l controls-margin_bottom-s">
+            {{ Block1.Title }}
+        </div>
+        <div class="tw-flex tw-items-baseline">
+            <div>
+                <ws:if data="{{ isLoading }}">
+                    <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountMain controls_border-radius-2xs" active="{true}" />
+                </ws:if>
+                <ws:else>
+                    <Controls.baseDecorator:Number
+                            value="{{ Block1.Value2 }}"
+                            fontSize="5xl"
+                            fontWeight="bold"
+                            abbreviationType="long"/>
+                </ws:else>
+                <div class="tw-flex tw-items-baseline">
+                    <span class="controls-text-unaccented controls-margin_right-2xs">было</span>
+                    <ws:if data="{{ isLoading }}">
+                        <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountSmall controls_border-radius-2xs" active="{true}" />
+                    </ws:if>
+                    <ws:else>
+                        <Controls.baseDecorator:Number
+                                value="{{ Block1.Value1 }}"
+                                fontSize="m"
+                                fontColorStyle="unaccented"
+                                abbreviationType="long"/>
+                    </ws:else>
+                </div>
+            </div>
+            <ws:if data="{{ isLoading }}">
+                <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_Percent controls_border-radius-3xl ml-auto" active="{true}" />
+            </ws:if>
+            <ws:else>
+                <div class="{{ Block1.Percent >= 0 ? 'success-block' : 'unsuccess-block' }} ml-auto shadow-1 tw-self-end controls_border-radius-3xl
+                            controls-padding_left-s controls-padding_right-s controls-padding_top-xs controls-padding_bottom-xs">
+                    <span class="controls-margin_right-xs">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.98449 14C5.78558 14 5.59481 13.921 5.45416 13.7803C5.31351 13.6397 5.23449 13.4489 5.23449 13.25V2.612L1.27449 6.77C1.13507 6.9064 0.948007 6.98312 0.752968 6.98389C0.557929 6.98466 0.370261 6.90942 0.229769 6.77413C0.0892777 6.63885 0.00701442 6.45415 0.00042818 6.25922C-0.00615806 6.06429 0.0634511 5.87446 0.19449 5.73L5.44449 0.23C5.51445 0.157413 5.59833 0.0996768 5.69111 0.0602412C5.7839 0.0208056 5.88368 0.000480652 5.98449 0.000480652C6.08531 0.000480652 6.18509 0.0208056 6.27787 0.0602412C6.37065 0.0996768 6.45453 0.157413 6.52449 0.23L11.7745 5.73C11.8462 5.80019 11.9032 5.88407 11.9419 5.97667C11.9806 6.06927 12.0004 6.1687 12 6.26907C11.9996 6.36945 11.9791 6.46872 11.9396 6.56101C11.9001 6.6533 11.8425 6.73672 11.7702 6.80635C11.6979 6.87597 11.6124 6.93037 11.5187 6.96633C11.425 7.00229 11.325 7.01907 11.2247 7.01568C11.1244 7.01229 11.0257 6.9888 10.9347 6.9466C10.8436 6.9044 10.7619 6.84435 10.6945 6.77L6.73449 2.612V13.25C6.73449 13.4489 6.65547 13.6397 6.51482 13.7803C6.37417 13.921 6.1834 14 5.98449 14Z" fill="#22C55E"/>
+                        </svg>
+                    </span>
+                    <span>{{ Block1.Percent }}%</span>
+                </div>
+            </ws:else>
+        </div>
+    </div>
+    <div class="shadow-1 controls_border-radius-m controls-padding_left-l controls-padding_right-l controls-padding_top-m controls-padding_bottom-m">
+        <div class="controls-fontsize-l controls-margin_bottom-s">
+            {{ Block2.Title }}
+        </div>
+        <div class="tw-flex tw-items-baseline">
+            <div>
+                <ws:if data="{{ isLoading }}">
+                    <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountMain controls_border-radius-2xs" active="{true}" />
+                </ws:if>
+                <ws:else>
+                    <Controls.baseDecorator:Number
+                            value="{{ Block2.Value2 }}"
+                            fontSize="5xl"
+                            fontWeight="bold"
+                            abbreviationType="long"/>
+                </ws:else>
+                <div class="tw-flex tw-items-baseline">
+                    <span class="controls-text-unaccented controls-margin_right-2xs">было</span>
+                    <ws:if data="{{ isLoading }}">
+                        <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountSmall controls_border-radius-2xs" active="{true}" />
+                    </ws:if>
+                    <ws:else>
+                        <Controls.baseDecorator:Number
+                                value="{{ Block2.Value1 }}"
+                                fontSize="m"
+                                fontColorStyle="unaccented"
+                                abbreviationType="long"/>
+                    </ws:else>
+                </div>
+            </div>
+            <ws:if data="{{ isLoading }}">
+                <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_Percent controls_border-radius-3xl ml-auto" active="{true}" />
+            </ws:if>
+            <ws:else>
+                <div class="{{ Block2.Percent >= 0 ? 'success-block' : 'unsuccess-block' }} ml-auto shadow-1 tw-self-end controls_border-radius-3xl
+                            controls-padding_left-s controls-padding_right-s controls-padding_top-xs controls-padding_bottom-xs">
+                    <span class="controls-margin_right-xs">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.98449 14C5.78558 14 5.59481 13.921 5.45416 13.7803C5.31351 13.6397 5.23449 13.4489 5.23449 13.25V2.612L1.27449 6.77C1.13507 6.9064 0.948007 6.98312 0.752968 6.98389C0.557929 6.98466 0.370261 6.90942 0.229769 6.77413C0.0892777 6.63885 0.00701442 6.45415 0.00042818 6.25922C-0.00615806 6.06429 0.0634511 5.87446 0.19449 5.73L5.44449 0.23C5.51445 0.157413 5.59833 0.0996768 5.69111 0.0602412C5.7839 0.0208056 5.88368 0.000480652 5.98449 0.000480652C6.08531 0.000480652 6.18509 0.0208056 6.27787 0.0602412C6.37065 0.0996768 6.45453 0.157413 6.52449 0.23L11.7745 5.73C11.8462 5.80019 11.9032 5.88407 11.9419 5.97667C11.9806 6.06927 12.0004 6.1687 12 6.26907C11.9996 6.36945 11.9791 6.46872 11.9396 6.56101C11.9001 6.6533 11.8425 6.73672 11.7702 6.80635C11.6979 6.87597 11.6124 6.93037 11.5187 6.96633C11.425 7.00229 11.325 7.01907 11.2247 7.01568C11.1244 7.01229 11.0257 6.9888 10.9347 6.9466C10.8436 6.9044 10.7619 6.84435 10.6945 6.77L6.73449 2.612V13.25C6.73449 13.4489 6.65547 13.6397 6.51482 13.7803C6.37417 13.921 6.1834 14 5.98449 14Z" fill="#22C55E"/>
+                        </svg>
+                    </span>
+                    <span>{{ Block2.Percent }}%</span>
+                </div>
+            </ws:else>
+        </div>
+    </div>
+    <div class="shadow-1 controls_border-radius-m controls-padding_left-l controls-padding_right-l controls-padding_top-m controls-padding_bottom-m">
+        <div class="controls-fontsize-l controls-margin_bottom-s">
+            {{ Block3.Title }}
+        </div>
+        <div class="tw-flex tw-items-baseline">
+            <div>
+                <ws:if data="{{ isLoading }}">
+                    <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountMain controls_border-radius-2xs" active="{true}" />
+                </ws:if>
+                <ws:else>
+                    <Controls.baseDecorator:Number
+                            value="{{ Block3.Value2 }}"
+                            fontSize="5xl"
+                            fontWeight="bold"
+                            abbreviationType="long"/>
+                </ws:else>
+                <div class="tw-flex tw-items-baseline">
+                    <span class="controls-text-unaccented controls-margin_right-2xs">было</span>
+                    <ws:if data="{{ isLoading }}">
+                        <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_CountSmall controls_border-radius-2xs" active="{true}" />
+                    </ws:if>
+                    <ws:else>
+                        <Controls.baseDecorator:Number
+                                value="{{ Block3.Value1 }}"
+                                fontSize="m"
+                                fontColorStyle="unaccented"
+                                abbreviationType="long"/>
+                    </ws:else>
+                </div>
+            </div>
+            <ws:if data="{{ isLoading }}">
+                <Controls.skeleton:Base className="Stats__BlocksMetrics_pages_Percent controls_border-radius-3xl ml-auto" active="{true}" />
+            </ws:if>
+            <ws:else>
+                <div class="{{ Block3.Percent >= 0 ? 'success-block' : 'unsuccess-block' }} ml-auto shadow-1 tw-self-end controls_border-radius-3xl
+                            controls-padding_left-s controls-padding_right-s controls-padding_top-xs controls-padding_bottom-xs">
+                    <span class="controls-margin_right-xs">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.98449 14C5.78558 14 5.59481 13.921 5.45416 13.7803C5.31351 13.6397 5.23449 13.4489 5.23449 13.25V2.612L1.27449 6.77C1.13507 6.9064 0.948007 6.98312 0.752968 6.98389C0.557929 6.98466 0.370261 6.90942 0.229769 6.77413C0.0892777 6.63885 0.00701442 6.45415 0.00042818 6.25922C-0.00615806 6.06429 0.0634511 5.87446 0.19449 5.73L5.44449 0.23C5.51445 0.157413 5.59833 0.0996768 5.69111 0.0602412C5.7839 0.0208056 5.88368 0.000480652 5.98449 0.000480652C6.08531 0.000480652 6.18509 0.0208056 6.27787 0.0602412C6.37065 0.0996768 6.45453 0.157413 6.52449 0.23L11.7745 5.73C11.8462 5.80019 11.9032 5.88407 11.9419 5.97667C11.9806 6.06927 12.0004 6.1687 12 6.26907C11.9996 6.36945 11.9791 6.46872 11.9396 6.56101C11.9001 6.6533 11.8425 6.73672 11.7702 6.80635C11.6979 6.87597 11.6124 6.93037 11.5187 6.96633C11.425 7.00229 11.325 7.01907 11.2247 7.01568C11.1244 7.01229 11.0257 6.9888 10.9347 6.9466C10.8436 6.9044 10.7619 6.84435 10.6945 6.77L6.73449 2.612V13.25C6.73449 13.4489 6.65547 13.6397 6.51482 13.7803C6.37417 13.921 6.1834 14 5.98449 14Z" fill="#22C55E"/>
+                        </svg>
+                    </span>
+                    <span>{{ Block3.Percent }}%</span>
+                </div>
+            </ws:else>
+        </div>
+    </div>
+</div>

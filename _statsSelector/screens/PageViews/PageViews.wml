@@ -1,0 +1,62 @@
+<Controls.scroll:Container attr:class="tw-h-full tw-w-full">
+    <div class="controls-margin_left-xs controls-margin_right-xs controls-margin_top-xl controls-margin_bottom-xl">
+        <div>
+            <div class="tw-flex tw-items-center tw-justify-between">
+                <Controls.heading:Title
+                        attr:class="controls-margin_left-m controls-margin_right-m controls-margin_bottom-m"
+                        caption="Топ страниц по просмотрам"
+                        fontSize="5xl"/>
+                <Graphs.InfoBlock
+                        infoBlockDataVisible="{{ false }}"
+                        infoBlockSelectorsVisible="{{ true }}"
+                        scope="{{ _chartInfoBlockOptions }}"
+                        on:periodsChanged="_chartPeriodsChanged()"/>
+            </div>
+            <Graphs.HighChartsLight
+                    name="topUserChart"
+                    chartOptions="{{ _chartOptions }}" />
+            <div class="tw-flex tw-items-center tw-justify-between controls-margin_left-m controls-margin_bottom-m">
+                <Controls.heading:Title
+                        caption="Статистика по пользователям"
+                        fontSize="5xl"/>
+                <Graphs.InfoBlock
+                        scope="{{ _defaultInfoBlockOptions }}"
+                        infoBlockDataVisible="{{ false }}"
+                        infoBlockSelectorsVisible="{{ true }}"
+                        periods="{{ _periods }}"
+                        on:periodsChanged="_graphPeriodsChanged()"/>
+            </div>
+            <div class="controls-margin_left-m controls-margin_right-m">
+                <ws:partial
+                    attr:class="controls-margin_bottom-2xl"
+                    template="wml!ComponentStats/_statsSelector/components/StatsResultsMetrics"
+                    scope="{{ _resultsItem }}"
+                    isLoading="{{ !_isGraphAndTableDataLoaded() }}" />
+                <Graphs.comparison:View
+                        attr:class="controls-margin_bottom-m"
+                        firstPeriodData="{{ _firstPeriodData }}"
+                        secondPeriodData="{{ _secondPeriodData }}"
+                        holidaysData="{{ _holidaysData }}"
+                        periods="{{ _periods }}"
+                        storeId="pageGraph"
+                        summaryData="{{ _summaryData }}"
+                        forecastVisible="{{ false }}"
+                        containerWidth="{{ 916 }}"
+                        infoBlockAlignConfig="{{ _infoBlockAlignConfig }}"
+                        infoBlockDataVisible="{{ false }}"
+                        infoBlockSelectorsVisible="{{ false }}"
+                        on:periodsChanged="_graphPeriodsChanged()" />
+            </div>
+                <Controls.explorer:View
+                        storeId="pageTable"
+                        header="{{ _header }}"
+                        columns="{{ _columns }}"
+                        itemPadding="{{ _itemPadding }}"
+                        expanderIconStyle="unaccented"
+                        expanderIconSize="2xs"
+                        expandByItemClick="{{ true }}">
+            </Controls.explorer:View>
+        </div>
+    </div>
+
+</Controls.scroll:Container>

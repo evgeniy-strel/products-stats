@@ -1,0 +1,15 @@
+<ws:partial template="Controls/grid:ColumnTemplate"
+            scope="{{_options}}">
+    <ws:contentTemplate>
+        <div class="ws-flexbox ws-align-items-center">
+            <ws:if data="{{item.contents.get('legend')}}">
+                <ws:partial template="{{item.contents.get('legend')}}"
+                            colorIndex="{{item.contents.get('colorIndex')}}"/>
+            </ws:if>
+            <ws:partial template="{{expanderTemplate}}"/>
+            <span class="ws-ellipsis controls-fontsize-m">
+                {{item.contents.get('name')}}
+            </span>
+        </div>
+    </ws:contentTemplate>
+</ws:partial>
